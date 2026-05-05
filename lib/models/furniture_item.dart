@@ -18,7 +18,7 @@ class FurnitureItem extends Equatable {
   final String? color;
   final DateTime dateAdded;
 
-  const FurnitureItem({
+  FurnitureItem({
     required this.id,
     required this.name,
     required this.price,
@@ -108,7 +108,7 @@ class FurnitureItem extends Equatable {
 }
 
 /// Sample furniture data
-List<FurnitureItem> sampleFurniture = [
+final List<FurnitureItem> sampleFurniture = [
   FurnitureItem(
     id: 1,
     name: 'Modern Sofa',

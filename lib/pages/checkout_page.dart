@@ -58,7 +58,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
           );
         }
 
-        final subtotal = cartItems.fold<double>(0, (s, i) => s + i.price);
+        final subtotal =
+            cartItems.fold<double>(0, (s, i) => s + i.displayPrice);
         final shipping = 29.99;
         final tax = subtotal * 0.08;
         final total = subtotal + shipping + tax;
@@ -245,7 +246,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis),
                                     ),
-                                    Text('\$${item.price.toStringAsFixed(0)}',
+                                    Text(
+                                        '\$${item.displayPrice.toStringAsFixed(0)}',
                                         style: tt.labelLarge),
                                   ],
                                 ),

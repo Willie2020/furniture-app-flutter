@@ -63,9 +63,31 @@ class ProductDetailPage extends StatelessWidget {
                         child: Text(item.name, style: tt.headlineMedium),
                       ),
                       const SizedBox(width: 16),
-                      Text('\$${item.price.toStringAsFixed(0)}',
-                          style:
-                              tt.headlineMedium?.copyWith(color: cs.primary)),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          if (item.isOnSale) ...[
+                            Text(
+                              '\$${item.price.toStringAsFixed(0)}',
+                              style: tt.bodyMedium?.copyWith(
+                                color: cs.onSurfaceVariant,
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            ),
+                            Text(
+                              '\$${item.displayPrice.toStringAsFixed(0)}',
+                              style:
+                                  tt.headlineMedium?.copyWith(color: cs.error),
+                            ),
+                          ] else ...[
+                            Text(
+                              '\$${item.displayPrice.toStringAsFixed(0)}',
+                              style: tt.headlineMedium
+                                  ?.copyWith(color: cs.primary),
+                            ),
+                          ],
+                        ],
+                      ),
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -77,7 +99,30 @@ class ProductDetailPage extends StatelessWidget {
                     Text('• ${item.category}',
                         style: tt.bodyMedium
                             ?.copyWith(color: cs.onSurfaceVariant)),
+                    if (item.color != null) ...[
+                      const SizedBox(width: 4),
+                      Text('• ${item.color}',
+                          style: tt.bodyMedium
+                              ?.copyWith(color: cs.onSurfaceVariant)),
+                    ],
                   ]),
+                  if (item.isOnSale)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.orange.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          '${item.discountPercent}% off — Save \$${(item.price - item.displayPrice).toStringAsFixed(0)}',
+                          style: tt.labelMedium
+                              ?.copyWith(color: Colors.orange.shade700),
+                        ),
+                      ),
+                    ),
                   const SizedBox(height: 20),
 
                   // Description
@@ -99,12 +144,28 @@ class ProductDetailPage extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     child: Column(children: [
                       _specRow(cs, tt, 'Category', item.category),
+                      if (item.materials != null) ...[
+                        const Divider(height: 20),
+                        _specRow(cs, tt, 'Materials', item.materials!),
+                      ],
+                      if (item.dimensions != null) ...[
+                        const Divider(height: 20),
+                        _specRow(cs, tt, 'Dimensions', item.dimensions!),
+                      ],
+                      if (item.color != null) ...[
+                        const Divider(height: 20),
+                        _specRow(cs, tt, 'Color', item.color!),
+                      ],
                       const Divider(height: 20),
                       _specRow(cs, tt, 'Rating', '${item.rating}/5'),
                       const Divider(height: 20),
-                      _specRow(cs, tt, 'Material', 'Premium quality'),
-                      const Divider(height: 20),
-                      _specRow(cs, tt, 'Assembly', 'Requires assembly'),
+                      _specRow(
+                          cs,
+                          tt,
+                          'Stock',
+                          item.stockQuantity > 0
+                              ? '${item.stockQuantity} in stock'
+                              : 'Out of stock'),
                     ]),
                   ),
                   const SizedBox(height: 20),

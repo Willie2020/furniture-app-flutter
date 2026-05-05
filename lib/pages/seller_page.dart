@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/furniture/furniture_bloc.dart';
 import '../blocs/furniture/furniture_event.dart';
 import '../blocs/furniture/furniture_state.dart';
+import '../models/furniture_item.dart';
 
 class SellerPage extends StatefulWidget {
   const SellerPage({super.key});
@@ -210,6 +211,12 @@ class _SellerPageState extends State<SellerPage>
         title: const Text('Seller Dashboard'),
         bottom: TabBar(
           controller: _tabCtrl,
+          // Ensure unselected tabs keep enough contrast on the primary
+          // background by using onPrimary at full opacity for the indicator
+          // and a slightly higher opacity for unselected labels.
+          indicatorColor: cs.onPrimary,
+          labelColor: cs.onPrimary,
+          unselectedLabelColor: cs.onPrimary.withValues(alpha: 0.8),
           tabs: const [
             Tab(icon: Icon(Icons.dashboard), text: 'Overview'),
             Tab(icon: Icon(Icons.add_circle), text: 'Add / Edit'),
@@ -279,9 +286,11 @@ class _SellerPageState extends State<SellerPage>
                   _statCard(cs, tt, Icons.check_circle, 'Active',
                       '${state.activeProductCount}', cs.tertiary),
                   _statCard(cs, tt, Icons.sell, 'On Sale',
-                      '${state.onSaleCount}', Colors.orange),
+                      '${state.onSaleCount}', cs.tertiaryContainer,
+                      iconColor: cs.onTertiaryContainer),
                   _statCard(cs, tt, Icons.inventory, 'Low Stock',
-                      '${state.lowStockCount}', Colors.amber),
+                      '${state.lowStockCount}', cs.secondaryContainer,
+                      iconColor: cs.onSecondaryContainer),
                   _statCard(cs, tt, Icons.error_outline, 'Out of Stock',
                       '${state.outOfStockCount}', cs.error),
                   _statCard(
@@ -290,7 +299,8 @@ class _SellerPageState extends State<SellerPage>
                       Icons.account_balance_wallet,
                       'Inventory Value',
                       '\$${state.totalInventoryValue.toStringAsFixed(0)}',
-                      Colors.teal),
+                      cs.primaryContainer,
+                      iconColor: cs.onPrimaryContainer),
                 ],
               ),
 
@@ -333,17 +343,18 @@ class _SellerPageState extends State<SellerPage>
   }
 
   Widget _statCard(ColorScheme cs, TextTheme tt, IconData icon, String label,
-      String value, Color accent) {
+      String value, Color accent,
+      {Color? iconColor}) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: cs.surfaceContainerHighest.withValues(alpha: 0.6),
+        color: cs.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: accent, size: 22),
+          Icon(icon, color: iconColor ?? accent, size: 22),
           const SizedBox(height: 8),
           Text(value,
               style: tt.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
@@ -363,7 +374,8 @@ class _SellerPageState extends State<SellerPage>
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          border: Border.all(color: cs.outlineVariant.withValues(alpha: 0.5)),
+          color: cs.surfaceContainerHighest.withValues(alpha: 0.4),
+          border: Border.all(color: cs.outlineVariant),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
@@ -767,11 +779,12 @@ class _SellerPageState extends State<SellerPage>
                           padding: const EdgeInsets.symmetric(
                               horizontal: 6, vertical: 2),
                           decoration: BoxDecoration(
-                              color: Colors.orange.withValues(alpha: 0.15),
+                              color:
+                                  cs.tertiaryContainer.withValues(alpha: 0.15),
                               borderRadius: BorderRadius.circular(6)),
                           child: Text('-${p.discountPercent}%',
                               style: tt.labelSmall
-                                  ?.copyWith(color: Colors.orange)),
+                                  ?.copyWith(color: cs.onTertiaryContainer)),
                         ),
                     ],
                   ),
@@ -808,8 +821,7 @@ class _SellerPageState extends State<SellerPage>
                       ] else if (lowStock) ...[
                         const SizedBox(width: 6),
                         Text('${p.stockQuantity} left',
-                            style: tt.bodySmall
-                                ?.copyWith(color: Colors.amber.shade700)),
+                            style: tt.bodySmall?.copyWith(color: cs.error)),
                       ],
                     ],
                   ),

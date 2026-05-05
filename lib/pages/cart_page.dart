@@ -32,7 +32,8 @@ class CartPage extends StatelessWidget {
           );
         }
 
-        final total = state.cartItems.fold<double>(0, (s, i) => s + i.price);
+        final total =
+            state.cartItems.fold<double>(0, (s, i) => s + i.displayPrice);
 
         return Column(
           children: [
@@ -73,7 +74,8 @@ class CartPage extends StatelessWidget {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis),
                                 const SizedBox(height: 4),
-                                Text('\$${item.price.toStringAsFixed(0)}',
+                                Text(
+                                    '\$${item.displayPrice.toStringAsFixed(0)}',
                                     style: tt.labelLarge
                                         ?.copyWith(color: cs.primary)),
                               ],
