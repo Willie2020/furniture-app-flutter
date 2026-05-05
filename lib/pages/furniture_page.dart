@@ -61,8 +61,7 @@ class _FurniturePageState extends State<FurniturePage> {
                       icon: const Icon(Icons.shopping_cart_outlined),
                       onPressed: () => Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (_) => const CartPage()),
+                        MaterialPageRoute(builder: (_) => const CartPage()),
                       ),
                     ),
                     if (state.cartItemCount > 0)
@@ -172,4 +171,19 @@ class _FurniturePageState extends State<FurniturePage> {
                             onFavorite: () => context
                                 .read<FurnitureBloc>()
                                 .add(ToggleFavorite(item.id)),
-                            onAddToCart:
+                            onAddToCart: () => context
+                                .read<FurnitureBloc>()
+                                .add(AddToCart(item.id)),
+                          ));
+                    },
+                    childCount: state.filteredItems.length,
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}

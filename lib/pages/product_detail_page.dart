@@ -113,9 +113,7 @@ class ProductDetailPage extends StatelessWidget {
                   Text('Experience it', style: tt.titleMedium),
                   const SizedBox(height: 8),
                   InkWell(
-                    onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('AR View coming soon! 🚀'))),
+                    onTap: () => _showARDialog(context),
                     borderRadius: BorderRadius.circular(16),
                     child: Container(
                       height: 160,
@@ -187,6 +185,76 @@ class ProductDetailPage extends StatelessWidget {
             ),
           ),
         ]),
+      ),
+    );
+  }
+
+  void _showARDialog(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final tt = Theme.of(context).textTheme;
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Row(
+          children: [
+            Icon(Icons.view_in_ar, color: cs.primary),
+            const SizedBox(width: 10),
+            Text('AR View', style: tt.titleMedium),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              height: 180,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: cs.surfaceContainerHighest,
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.camera_alt_outlined,
+                        size: 48, color: cs.onSurfaceVariant),
+                    const SizedBox(height: 8),
+                    Text('Camera preview',
+                        style: tt.bodyMedium
+                            ?.copyWith(color: cs.onSurfaceVariant)),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Point your camera at an open area to see how ${item.name} fits in your space.',
+              style: tt.bodyMedium,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+          FilledButton.icon(
+            onPressed: () {
+              Navigator.pop(ctx);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text('AR experience launching soon! 🚀'),
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                ),
+              );
+            },
+            icon: const Icon(Icons.play_arrow),
+            label: const Text('Launch AR'),
+          ),
+        ],
       ),
     );
   }
