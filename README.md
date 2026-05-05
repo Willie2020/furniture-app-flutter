@@ -1,6 +1,6 @@
 # simple_flutter
 
-A Flutter application built with BLoC state management and local SQLite storage.
+A Flutter mobile application built with BLoC state management and local SQLite storage. Supports Android and iOS.
 
 ---
 
@@ -78,21 +78,7 @@ This installs all packages listed in `pubspec.yaml`, including:
   ```sh
   cd ios && pod install && cd ..
   ```
-
-#### Linux
-- Install required system libraries:
-  ```sh
-  sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev
-  ```
-
-#### Windows
-- Ensure [Visual Studio 2022](https://visualstudio.microsoft.com/) is installed with the **Desktop development with C++** workload.
-
-#### Web
-- Enable the web platform (if not already enabled):
-  ```sh
-  flutter config --enable-web
-  ```
+- Connect a physical device or start an iOS simulator.
 
 ---
 
@@ -157,46 +143,6 @@ Then open `ios/Runner.xcworkspace` in Xcode to archive and distribute the app.
 
 ---
 
-### Web
-
-```sh
-flutter build web --release
-```
-
-Output: `build/web/`
-
----
-
-### Linux
-
-```sh
-flutter build linux --release
-```
-
-Output: `build/linux/x64/release/bundle/`
-
----
-
-### macOS
-
-```sh
-flutter build macos --release
-```
-
-Output: `build/macos/Build/Products/Release/`
-
----
-
-### Windows
-
-```sh
-flutter build windows --release
-```
-
-Output: `build/windows/x64/runner/Release/`
-
----
-
 ## Project Structure
 
 ```
@@ -211,10 +157,6 @@ simple_flutter/
 │   └── main.dart     # App entry point
 ├── android/          # Android platform files
 ├── ios/              # iOS platform files
-├── linux/            # Linux platform files
-├── macos/            # macOS platform files
-├── windows/          # Windows platform files
-├── web/              # Web platform files
 ├── test/             # Unit and widget tests
 └── pubspec.yaml      # Project dependencies and metadata
 ```
