@@ -1,0 +1,100 @@
+# ============================================================
+# Whitelist-style .gitignore — only Flutter-related files
+# are allowed. Everything else is ignored by default.
+# ============================================================
+
+# Ignore everything by default
+*
+
+# ============================================================
+# Always allow these essential files
+# ============================================================
+!.gitignore
+!.gitattributes
+
+# ============================================================
+# Flutter / Dart project files
+# ============================================================
+!.metadata
+!pubspec.yaml
+!pubspec.lock
+!analysis_options.yaml
+!README.md
+
+# ============================================================
+# Dart source code & tests
+# ============================================================
+!lib/
+!lib/**
+!test/
+!test/**
+
+# ============================================================
+# Assets (uncomment if you have an assets/ directory)
+# ============================================================
+# !assets/
+# !assets/**
+
+# ============================================================
+# Android platform
+# ============================================================
+!android/
+!android/**
+# Still ignore Android build output and local config
+android/app/debug/
+android/app/profile/
+android/app/release/
+android/local.properties
+android/.gradle/
+android/app/build/
+android/build/
+android/*.keystore
+android/*.jks
+
+# ============================================================
+# iOS platform
+# ============================================================
+!ios/
+!ios/**
+# Still ignore iOS build artifacts & ephemeral pods
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Flutter/.last_build_id
+
+# ============================================================
+# Web platform
+# ============================================================
+!web/
+!web/**
+
+# ============================================================
+# Linux platform
+# ============================================================
+!linux/
+!linux/**
+# Ignore build output
+linux/flutter/ephemeral/
+linux/flutter/generated_plugin_registrant.cc
+linux/flutter/generated_plugin_registrant.h
+linux/flutter/generated_plugins.cmake
+
+# ============================================================
+# macOS platform
+# ============================================================
+!macos/
+!macos/**
+# Ignore build output & ephemeral pods
+macos/Pods/
+macos/Flutter/ephemeral/
+
+# ============================================================
+# Windows platform
+# ============================================================
+!windows/
+!windows/**
+# Ignore build output
+windows/flutter/ephemeral/
