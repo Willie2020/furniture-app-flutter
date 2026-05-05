@@ -4,48 +4,107 @@ class FurnitureItem extends Equatable {
   final int id;
   final String name;
   final double price;
+  final double? salePrice;
   final String image;
+  final List<String> images;
   final String description;
   final String category;
   final double rating;
   final bool isFavorite;
+  final int stockQuantity;
+  final bool isActive;
+  final String? materials;
+  final String? dimensions;
+  final String? color;
+  final DateTime dateAdded;
 
   const FurnitureItem({
     required this.id,
     required this.name,
     required this.price,
+    this.salePrice,
     required this.image,
+    this.images = const [],
     required this.description,
     required this.category,
     required this.rating,
     this.isFavorite = false,
-  });
+    this.stockQuantity = 10,
+    this.isActive = true,
+    this.materials,
+    this.dimensions,
+    this.color,
+    DateTime? dateAdded,
+  }) : dateAdded = dateAdded ?? DateTime.now();
+
+  /// Effective display price (sale price if available, otherwise regular price)
+  double get displayPrice => salePrice ?? price;
+
+  /// Whether this item is on sale
+  bool get isOnSale => salePrice != null && salePrice! < price;
+
+  /// Discount percentage (0-100)
+  int get discountPercent =>
+      isOnSale ? ((price - salePrice!) / price * 100).round() : 0;
 
   FurnitureItem copyWith({
     int? id,
     String? name,
     double? price,
+    double? salePrice,
+    bool clearSalePrice = false,
     String? image,
+    List<String>? images,
     String? description,
     String? category,
     double? rating,
     bool? isFavorite,
+    int? stockQuantity,
+    bool? isActive,
+    String? materials,
+    String? dimensions,
+    String? color,
+    DateTime? dateAdded,
   }) {
     return FurnitureItem(
       id: id ?? this.id,
       name: name ?? this.name,
       price: price ?? this.price,
+      salePrice: clearSalePrice ? null : (salePrice ?? this.salePrice),
       image: image ?? this.image,
+      images: images ?? this.images,
       description: description ?? this.description,
       category: category ?? this.category,
       rating: rating ?? this.rating,
       isFavorite: isFavorite ?? this.isFavorite,
+      stockQuantity: stockQuantity ?? this.stockQuantity,
+      isActive: isActive ?? this.isActive,
+      materials: materials ?? this.materials,
+      dimensions: dimensions ?? this.dimensions,
+      color: color ?? this.color,
+      dateAdded: dateAdded ?? this.dateAdded,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [id, name, price, image, description, category, rating, isFavorite];
+  List<Object?> get props => [
+        id,
+        name,
+        price,
+        salePrice,
+        image,
+        images,
+        description,
+        category,
+        rating,
+        isFavorite,
+        stockQuantity,
+        isActive,
+        materials,
+        dimensions,
+        color,
+        dateAdded,
+      ];
 }
 
 /// Sample furniture data

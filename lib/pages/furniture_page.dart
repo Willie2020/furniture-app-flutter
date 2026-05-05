@@ -5,6 +5,7 @@ import '../blocs/furniture/furniture_event.dart';
 import '../blocs/furniture/furniture_state.dart';
 import '../widgets/category_chip.dart';
 import '../widgets/custom_search_bar.dart';
+import '../widgets/expandable_sliver_header.dart';
 import '../widgets/furniture_card.dart';
 import 'cart_page.dart';
 import 'product_detail_page.dart';
@@ -49,16 +50,19 @@ class _FurniturePageState extends State<FurniturePage> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // App bar — simple, no fake expanded height
-          SliverAppBar(
-            pinned: true,
-            title: Text('Furniture Gallery', style: tt.titleLarge),
+          // Expandable header — compresses on scroll
+          ExpandableSliverHeader(
+            title: 'Furniture Gallery',
+            subtitle: 'Discover beautiful pieces for your home',
+            icon: Icons.chair_outlined,
+            expandedHeight: 200,
             actions: [
               BlocBuilder<FurnitureBloc, FurnitureState>(
                 builder: (_, state) => Stack(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.shopping_cart_outlined),
+                      icon: const Icon(Icons.shopping_cart_outlined,
+                          color: Colors.white),
                       onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(builder: (_) => const CartPage()),

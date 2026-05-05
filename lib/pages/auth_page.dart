@@ -178,8 +178,7 @@ class _AuthPageState extends State<AuthPage> {
                               child: CircularProgressIndicator(
                                   strokeWidth: 2.5, color: Colors.white),
                             )
-                          : Text(isSignIn ? 'Sign In' : 'Sign Up',
-                              style: tt.labelLarge),
+                          : Text(isSignIn ? 'Sign In' : 'Sign Up'),
                     ),
                     const SizedBox(height: 28),
                     Row(children: [

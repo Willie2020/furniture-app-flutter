@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../blocs/furniture/furniture_bloc.dart';
 import '../blocs/furniture/furniture_event.dart';
 import '../blocs/furniture/furniture_state.dart';
+import '../widgets/expandable_sliver_header.dart';
 import '../widgets/furniture_card.dart';
 import 'product_detail_page.dart';
 
@@ -21,8 +22,12 @@ class WishlistPage extends StatelessWidget {
         if (favorites.isEmpty) {
           return CustomScrollView(
             slivers: [
-              SliverAppBar(
-                  pinned: true, title: Text('Wishlist', style: tt.titleLarge)),
+              ExpandableSliverHeader(
+                title: 'Wishlist',
+                subtitle: 'Your saved favorites',
+                icon: Icons.favorite_outline,
+                expandedHeight: 170,
+              ),
               SliverFillRemaining(
                 child: Center(
                   child: Column(
@@ -46,10 +51,11 @@ class WishlistPage extends StatelessWidget {
 
         return CustomScrollView(
           slivers: [
-            SliverAppBar(
-              pinned: true,
-              title:
-                  Text('Wishlist (${favorites.length})', style: tt.titleLarge),
+            ExpandableSliverHeader(
+              title: 'Wishlist (${favorites.length})',
+              subtitle: 'Your saved favorites',
+              icon: Icons.favorite_outline,
+              expandedHeight: 170,
             ),
             SliverPadding(
               padding: const EdgeInsets.all(16),

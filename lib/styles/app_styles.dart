@@ -65,6 +65,10 @@ class AppTheme {
         scrolledUnderElevation: 1,
         backgroundColor: cs.primary,
         foregroundColor: cs.onPrimary,
+        titleTextStyle: ThemeData.light(useMaterial3: true)
+            .textTheme
+            .titleLarge
+            ?.copyWith(color: cs.onPrimary),
       ),
 
       cardTheme: CardThemeData(

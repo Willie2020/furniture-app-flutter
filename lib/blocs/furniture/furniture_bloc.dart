@@ -12,7 +12,10 @@ class FurnitureBloc extends Bloc<FurnitureEvent, FurnitureState> {
     on<AddToCart>(_onAddToCart);
     on<RemoveFromCart>(_onRemoveFromCart);
     on<AddNewProduct>(_onAddNewProduct);
+    on<UpdateProduct>(_onUpdateProduct);
     on<DeleteProduct>(_onDeleteProduct);
+    on<ToggleProductActive>(_onToggleActive);
+    on<DuplicateProduct>(_onDuplicateProduct);
   }
 
   void _onLoad(LoadFurniture event, Emitter<FurnitureState> emit) {
@@ -86,13 +89,67 @@ class FurnitureBloc extends Bloc<FurnitureEvent, FurnitureState> {
       id: newId,
       name: event.name,
       price: event.price,
+      salePrice: event.salePrice,
       image: event.image,
+      images: event.images,
       description: event.description,
       category: event.category,
       rating: event.rating,
+      stockQuantity: event.stockQuantity,
+      materials: event.materials,
+      dimensions: event.dimensions,
+      color: event.color,
     );
     final updated = [...state.items, newItem];
     emit(state.copyWith(items: updated, filteredItems: updated));
+  }
+
+  void _onUpdateProduct(UpdateProduct event, Emitter<FurnitureState> emit) {
+    final updatedItems = state.items.map((item) {
+      if (item.id == event.itemId) {
+        return item.copyWith(
+          name: event.name,
+          price: event.price,
+          salePrice: event.salePrice,
+          clearSalePrice: event.clearSalePrice ?? false,
+          image: event.image,
+          images: event.images,
+          description: event.description,
+          category: event.category,
+          rating: event.rating,
+          stockQuantity: event.stockQuantity,
+          isActive: event.isActive,
+          materials: event.materials,
+          dimensions: event.dimensions,
+          color: event.color,
+        );
+      }
+      return item;
+    }).toList();
+
+    final updatedFiltered = state.filteredItems.map((item) {
+      if (item.id == event.itemId) {
+        return item.copyWith(
+          name: event.name,
+          price: event.price,
+          salePrice: event.salePrice,
+          clearSalePrice: event.clearSalePrice ?? false,
+          image: event.image,
+          images: event.images,
+          description: event.description,
+          category: event.category,
+          rating: event.rating,
+          stockQuantity: event.stockQuantity,
+          isActive: event.isActive,
+          materials: event.materials,
+          dimensions: event.dimensions,
+          color: event.color,
+        );
+      }
+      return item;
+    }).toList();
+
+    emit(state.copyWith(items: updatedItems, filteredItems: updatedFiltered));
   }
 
   void _onDeleteProduct(DeleteProduct event, Emitter<FurnitureState> emit) {
@@ -105,5 +162,38 @@ class FurnitureBloc extends Bloc<FurnitureEvent, FurnitureState> {
         items: updated,
         filteredItems: updatedFiltered,
         cartItems: updatedCart));
+  }
+
+  void _onToggleActive(
+      ToggleProductActive event, Emitter<FurnitureState> emit) {
+    final updatedItems = state.items.map((item) {
+      if (item.id == event.itemId) {
+        return item.copyWith(isActive: !item.isActive);
+      }
+      return item;
+    }).toList();
+
+    final updatedFiltered = state.filteredItems.map((item) {
+      if (item.id == event.itemId) {
+        return item.copyWith(isActive: !item.isActive);
+      }
+      return item;
+    }).toList();
+
+    emit(state.copyWith(items: updatedItems, filteredItems: updatedFiltered));
+  }
+
+  void _onDuplicateProduct(
+      DuplicateProduct event, Emitter<FurnitureState> emit) {
+    final original = state.items.firstWhere((i) => i.id == event.itemId);
+    final newId =
+        state.items.map((i) => i.id).reduce((a, b) => a > b ? a : b) + 1;
+    final duplicate = original.copyWith(
+      id: newId,
+      name: '${original.name} (Copy)',
+      dateAdded: DateTime.now(),
+    );
+    final updated = [...state.items, duplicate];
+    emit(state.copyWith(items: updated, filteredItems: updated));
   }
 }

@@ -4,6 +4,7 @@ import '../blocs/furniture/furniture_bloc.dart';
 import '../blocs/furniture/furniture_event.dart';
 import '../models/collection.dart';
 import '../models/deal.dart';
+import '../widgets/expandable_sliver_header.dart';
 import 'deals_page.dart';
 import 'furniture_page.dart';
 
@@ -17,9 +18,11 @@ class ExplorePage extends StatelessWidget {
 
     return CustomScrollView(
       slivers: [
-        SliverAppBar(
-          pinned: true,
-          title: Text('Explore', style: tt.titleLarge),
+        ExpandableSliverHeader(
+          title: 'Explore',
+          subtitle: 'Trending deals, collections & more',
+          icon: Icons.explore_outlined,
+          expandedHeight: 190,
         ),
 
         // Flash Deals section
@@ -32,10 +35,8 @@ class ExplorePage extends StatelessWidget {
               Text('Flash Deals', style: tt.titleMedium),
               const Spacer(),
               TextButton(
-                  onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const DealsPage())),
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const DealsPage())),
                   child: const Text('See all')),
             ]),
           ),
@@ -106,10 +107,7 @@ class ExplorePage extends StatelessWidget {
                   .map((t) => ActionChip(
                         label: Text(t),
                         onPressed: () {
-                          // Navigate to shop with search pre-filled
-                          final bloc = context.read<FurnitureBloc>();
-                          bloc.add(SearchFurniture(t));
-                          // Find the parent HomePage and switch to Shop tab
+                          context.read<FurnitureBloc>().add(SearchFurniture(t));
                           _switchToShopTab(context);
                         },
                         avatar: const Icon(Icons.search, size: 14),
@@ -123,12 +121,7 @@ class ExplorePage extends StatelessWidget {
     );
   }
 
-  /// Attempts to switch the parent HomePage's tab to Shop (index 0).
   void _switchToShopTab(BuildContext context) {
-    // Walk up the tree to find the HomePage's Scaffold and switch tabs
-    final homeState = context.findAncestorStateOfType<dynamic>();
-    // Since we can't easily call setState on the ancestor, we instead just
-    // navigate to the shop directly via a fresh page push.
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => const FurniturePage()),
@@ -289,7 +282,7 @@ class _CollectionCard extends StatelessWidget {
                 ],
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

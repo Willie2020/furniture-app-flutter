@@ -10,12 +10,12 @@ class SettingsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings', style: tt.titleLarge),
+        title: Text('Settings'),
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 8),
         children: [
-          _section('Appearance'),
+          _section('Appearance', cs),
           SwitchListTile(
             title: const Text('Dark Mode'),
             subtitle: Text('Switch between light and dark theme',
@@ -29,7 +29,7 @@ class SettingsPage extends StatelessWidget {
             secondary: const Icon(Icons.dark_mode_outlined),
           ),
           const Divider(indent: 72),
-          _section('Notifications'),
+          _section('Notifications', cs),
           SwitchListTile(
             title: const Text('Push Notifications'),
             subtitle: Text('Get alerts for new deals and order updates',
@@ -47,7 +47,7 @@ class SettingsPage extends StatelessWidget {
             secondary: const Icon(Icons.email_outlined),
           ),
           const Divider(indent: 72),
-          _section('About'),
+          _section('About', cs),
           ListTile(
             leading: const Icon(Icons.info_outline),
             title: const Text('App Version'),
@@ -77,13 +77,13 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _section(String title) {
+  Widget _section(String title, ColorScheme cs) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
       child: Text(
         title,
         style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
+          color: cs.primary,
           fontWeight: FontWeight.w600,
           fontSize: 13,
         ),

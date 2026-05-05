@@ -10,7 +10,7 @@ class AddressesPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Addresses', style: tt.titleLarge),
+        title: Text('My Addresses'),
       ),
       body: Center(
         child: Padding(

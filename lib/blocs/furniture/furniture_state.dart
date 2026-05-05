@@ -40,6 +40,21 @@ class FurnitureState extends Equatable {
 
   int get cartItemCount => cartItems.length;
 
+  // ── Seller / inventory helpers ──
+  List<FurnitureItem> get activeItems =>
+      items.where((i) => i.isActive).toList();
+
+  int get totalProducts => items.length;
+  int get activeProductCount => items.where((i) => i.isActive).length;
+  int get outOfStockCount =>
+      items.where((i) => i.isActive && i.stockQuantity == 0).length;
+  int get lowStockCount => items
+      .where((i) => i.isActive && i.stockQuantity > 0 && i.stockQuantity <= 5)
+      .length;
+  int get onSaleCount => items.where((i) => i.isActive && i.isOnSale).length;
+  double get totalInventoryValue =>
+      items.fold(0, (sum, i) => sum + (i.displayPrice * i.stockQuantity));
+
   @override
   List<Object?> get props =>
       [status, items, filteredItems, cartItems, selectedCategory, searchQuery];

@@ -11,7 +11,7 @@ class DealsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flash Deals 🚀', style: tt.titleLarge),
+        title: Text('Flash Deals 🚀'),
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),

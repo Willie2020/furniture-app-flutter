@@ -38,7 +38,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         final cartItems = state.cartItems;
         if (cartItems.isEmpty) {
           return Scaffold(
-            appBar: AppBar(title: Text('Checkout', style: tt.titleLarge)),
+            appBar: AppBar(title: const Text('Checkout')),
             body: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -65,7 +65,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text('Checkout', style: tt.titleLarge),
+            title: const Text('Checkout'),
           ),
           body: Column(
             children: [

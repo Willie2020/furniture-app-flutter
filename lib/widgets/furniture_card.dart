@@ -72,11 +72,13 @@ class FurnitureCard extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
-                      color: cs.primary.withValues(alpha: 0.9),
+                      color: item.isOnSale
+                          ? Colors.orange.shade700
+                          : cs.primary.withValues(alpha: 0.9),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(
-                      '\$${item.price.toStringAsFixed(0)}',
+                      '\$${item.displayPrice.toStringAsFixed(0)}',
                       style: tt.labelMedium?.copyWith(
                         color: cs.onPrimary,
                         fontWeight: FontWeight.bold,
@@ -84,6 +86,27 @@ class FurnitureCard extends StatelessWidget {
                     ),
                   ),
                 ),
+                // Sale badge
+                if (item.isOnSale)
+                  Positioned(
+                    top: 6,
+                    right: 38,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: Colors.orange.shade700,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        '-${item.discountPercent}%',
+                        style: tt.labelSmall?.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),
@@ -113,7 +136,7 @@ class FurnitureCard extends StatelessWidget {
                     child: FilledButton.icon(
                       onPressed: onAddToCart,
                       icon: const Icon(Icons.add, size: 16),
-                      label: Text('Cart', style: tt.labelSmall),
+                      label: const Text('Cart'),
                       style: FilledButton.styleFrom(
                         padding: const EdgeInsets.symmetric(horizontal: 6),
                         minimumSize: const Size(0, 30),
